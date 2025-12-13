@@ -211,12 +211,26 @@ document.addEventListener("DOMContentLoaded", () => {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(window.myMap);
+      const greenPin = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 
 // Add markers for all sightings
 Object.entries(sightingData).forEach(([species, data]) => {
   if (data.coords) {
-    const marker = L.marker(data.coords).addTo(window.myMap);
-    marker.bindPopup(`<b>${species}</b><br>${data.location}`);
+const marker = L.marker(data.coords, {
+  icon: greenPin
+}).addTo(window.myMap);
+
+
+marker.bindPopup(`<b>${species}</b><br>${data.location}`);
+
   }
 });
     } else if (window.myMap) {
